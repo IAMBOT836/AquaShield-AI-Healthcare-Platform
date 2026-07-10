@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AquaShield AI | Analyzing Water Sample</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "surface-dim": "#cbdbf5",
+                    "surface-bright": "#f8f9ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#07006c",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#005236",
+                    "background": "#f8f9ff",
+                    "surface-container-highest": "#d3e4fe",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary-container": "#f1eeff",
+                    "on-primary": "#ffffff",
+                    "secondary": "#006c49",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-primary-fixed": "#00174b",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#004ac6",
+                    "tertiary-container": "#585be6",
+                    "inverse-surface": "#213145",
+                    "inverse-primary": "#b4c5ff",
+                    "surface-variant": "#d3e4fe",
+                    "outline-variant": "#c3c6d7",
+                    "on-background": "#0b1c30",
+                    "secondary-container": "#6cf8bb",
+                    "surface-container-low": "#eff4ff",
+                    "on-primary-container": "#eeefff",
+                    "surface-tint": "#0053db",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-secondary-container": "#00714d",
+                    "on-secondary-fixed": "#002113",
+                    "primary-container": "#2563eb",
+                    "outline": "#737686",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-surface": "#0b1c30",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dbe1ff",
+                    "tertiary": "#3e3fcc",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-surface-variant": "#434655",
+                    "tertiary-fixed": "#e1e0ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-secondary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "card-gap": "24px",
+                    "section-margin": "64px",
+                    "gutter": "24px",
+                    "container-padding-mobile": "20px",
+                    "unit": "8px",
+                    "container-padding-desktop": "40px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        @keyframes scan {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(100%); opacity: 0; }
+        }
+        .scanning-line {
+            animation: scan 3s ease-in-out infinite;
+            background: linear-gradient(to bottom, transparent, #6cf8bb, transparent);
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(108, 248, 187, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(108, 248, 187, 0.4); }
+        }
+        .animate-glow {
+            animation: pulse-glow 3s infinite;
+        }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+        .checkpoint-enter {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.5s ease-out;
+        }
+        .checkpoint-active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-hidden">
+<!-- TopNavBar (Dimmed for Focus) -->
+<header class="fixed top-0 left-0 right-0 z-50 opacity-40 pointer-events-none transition-opacity duration-700 bg-surface/80 backdrop-blur-xl border-b border-white/20 h-20 flex justify-between items-center w-full px-container-padding-mobile md:px-container-padding-desktop max-w-7xl mx-auto shadow-[0_8px_32px_rgba(0,74,198,0.05)]">
+<div class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tight">AquaShield AI</div>
+<nav class="hidden md:flex gap-8 items-center">
+<span class="font-label-md text-label-md text-on-surface-variant">Home</span>
+<span class="font-label-md text-label-md text-on-surface-variant">About</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Features</span>
+<span class="font-label-md text-label-md text-primary font-bold border-b-2 border-primary pb-1">Dashboard</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Contact</span>
+</nav>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md">Get Started</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative min-h-screen w-full flex items-center justify-center pt-20 px-container-padding-mobile">
+<!-- Background Atmospheric Effect -->
+<div class="absolute inset-0 overflow-hidden -z-10">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/10 blur-[150px] rounded-full"></div>
+</div>
+<div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<!-- Left: Scanning Visualizer -->
+<div class="relative flex justify-center items-center">
+<div class="relative w-80 h-80 md:w-[450px] md:h-[450px] rounded-full p-1 bg-gradient-to-tr from-primary/20 to-secondary/20 animate-glow">
+<div class="relative w-full h-full rounded-full overflow-hidden bg-surface-container-lowest shadow-inner border-4 border-white/50">
+<!-- Placeholder Microscope Image -->
+<div class="w-full h-full bg-cover bg-center opacity-80" data-alt="A high-magnification microscope view of water particles and microorganisms. The image has a clinical, sterile aesthetic with cool blue and emerald green lighting. Tiny crystalline structures and organic shapes are visible against a soft, blurred background, evoking a sense of deep scientific analysis within a futuristic laboratory setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMSmcIhL7uKtv18gyBOF7vhUpqdQNYc7I8qL50kSuye3l5io6w6cXgaqDlxHbO4gXMJyr5DCPV44_Q1iqBAlHG4SXCoACicXFJ8tK4PAQyS1isoqoAnz9v1YNHFF6_PHVLqPKWLd3xP5ujrtu4aPCA5fnZ_ss_JlWSJjk4zNxSbFinymu_11GbmaaQBzOqaXmgGmVR1un_gjEg8nw_i-GK3r0n_T-7Ts6OtK2IQSeQFWEo3M7t6p50oNhZp0w-jYMUDGNSvw_Jx6g')">
+</div>
+<!-- Circular Scanning Effect overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent"></div>
+<div class="absolute top-0 left-0 w-full h-full scanning-line opacity-60"></div>
+<!-- Radar Lines -->
+<div class="absolute inset-0 border border-secondary/20 rounded-full scale-90"></div>
+<div class="absolute inset-0 border border-secondary/10 rounded-full scale-75"></div>
+</div>
+</div>
+<!-- Circular Progress Bar centered/layered -->
+<div class="absolute -inset-4 pointer-events-none">
+<svg class="w-full h-full" viewbox="0 0 100 100">
+<circle class="text-outline-variant/20" cx="50" cy="50" fill="transparent" r="48" stroke="currentColor" stroke-width="2"></circle>
+<circle class="text-secondary progress-ring__circle" cx="50" cy="50" fill="transparent" id="progress-circle" r="48" stroke="currentColor" stroke-dasharray="301.59" stroke-dashoffset="301.59" stroke-linecap="round" stroke-width="2"></circle>
+</svg>
+</div>
+</div>
+<!-- Right: Status & Checkpoints -->
+<div class="flex flex-col space-y-8 glass-card p-8 md:p-12 rounded-[24px] bg-white/40 backdrop-blur-[20px] border border-white/40 shadow-[0_32px_64px_rgba(0,74,198,0.08)]">
+<div>
+<div class="flex items-baseline gap-4">
+<h1 class="font-display-lg text-display-lg-mobile md:text-headline-lg text-on-surface tracking-tight" id="status-title">Analyzing Water Sample...</h1>
+<span class="font-display-lg text-primary text-display-lg-mobile md:text-headline-lg" id="percentage-display">0%</span>
+</div>
+<p class="font-body-md text-on-surface-variant mt-2">AI-driven molecular diagnostics in progress. Please do not close this window.</p>
+</div>
+<!-- Checkpoint List -->
+<div class="space-y-4" id="checkpoints-container">
+<div class="checkpoint flex items-center gap-4 opacity-40 transition-all duration-500" data-threshold="15">
+<div class="status-icon w-8 h-8 rounded-full flex items-center justify-center bg-surface-container border border-outline-variant transition-colors duration-300">
+<span class="material-symbols-outlined text-[18px]">hourglass_empty</span>
+</div>
+<span class="font-label-md text-on-surface transition-colors duration-300">Preprocessing Water Data</span>
+</div>
+<div class="checkpoint flex items-center gap-4 opacity-40 transition-all duration-500" data-threshold="35">
+<div class="status-icon w-8 h-8 rounded-full flex items-center justify-center bg-surface-container border border-outline-variant transition-colors duration-300">
+<span class="material-symbols-outlined text-[18px]">hourglass_empty</span>
+</div>
+<span class="font-label-md text-on-surface transition-colors duration-300">Feature Extraction</span>
+</div>
+<div class="checkpoint flex items-center gap-4 opacity-40 transition-all duration-500" data-threshold="60">
+<div class="status-icon w-8 h-8 rounded-full flex items-center justify-center bg-surface-container border border-outline-variant transition-colors duration-300">
+<span class="material-symbols-outlined text-[18px]">hourglass_empty</span>
+</div>
+<span class="font-label-md text-on-surface transition-colors duration-300">AI Neural Classification</span>
+</div>
+<div class="checkpoint flex items-center gap-4 opacity-40 transition-all duration-500" data-threshold="85">
+<div class="status-icon w-8 h-8 rounded-full flex items-center justify-center bg-surface-container border border-outline-variant transition-colors duration-300">
+<span class="material-symbols-outlined text-[18px]">hourglass_empty</span>
+</div>
+<span class="font-label-md text-on-surface transition-colors duration-300">Real-time Disease Mapping</span>
+</div>
+<div class="checkpoint flex items-center gap-4 opacity-40 transition-all duration-500" data-threshold="95">
+<div class="status-icon w-8 h-8 rounded-full flex items-center justify-center bg-surface-container border border-outline-variant transition-colors duration-300">
+<span class="material-symbols-outlined text-[18px]">hourglass_empty</span>
+</div>
+<span class="font-label-md text-on-surface transition-colors duration-300">Generating Recommendations</span>
+</div>
+</div>
+<!-- Footer AI Insight -->
+<div class="mt-8 p-4 bg-primary-container/10 rounded-xl border border-primary/10 flex gap-4 items-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<p class="text-label-sm text-on-primary-fixed-variant leading-relaxed">
+                        Our AI models are trained on 10M+ aquatic biosamples to ensure 99.8% diagnostic accuracy.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Standard Anchor) -->
+<footer class="fixed bottom-0 w-full py-6 px-container-padding-mobile md:px-container-padding-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 opacity-60">
+<p class="font-label-sm text-label-sm text-on-surface-variant/80">© 2024 AquaShield AI. Made with ❤️ using AI</p>
+<div class="flex gap-6">
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">Sitemap</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">GitHub</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">LinkedIn</span>
+</div>
+</footer>
+<script>
+        let progress = 0;
+        const circle = document.getElementById('progress-circle');
+        const percentageText = document.getElementById('percentage-display');
+        const checkpoints = document.querySelectorAll('.checkpoint');
+        const radius = circle.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+
+        circle.style.strokeDasharray = `${circumference} ${circumference}`;
+
+        function setProgress(percent) {
+            const offset = circumference - (percent / 100 * circumference);
+            circle.style.strokeDashoffset = offset;
+            percentageText.innerText = `${Math.floor(percent)}%`;
+            
+            checkpoints.forEach(checkpoint => {
+                const threshold = parseInt(checkpoint.getAttribute('data-threshold'));
+                if (percent >= threshold) {
+                    checkpoint.classList.remove('opacity-40');
+                    checkpoint.classList.add('opacity-100');
+                    const iconContainer = checkpoint.querySelector('.status-icon');
+                    const icon = checkpoint.querySelector('.material-symbols-outlined');
+                    
+                    if (icon.innerText !== 'check_circle') {
+                        icon.innerText = 'check_circle';
+                        icon.classList.add('text-secondary');
+                        icon.style.fontVariationSettings = "'FILL' 1";
+                        iconContainer.classList.add('bg-secondary-container/30', 'border-secondary/40');
+                    }
+                }
+            });
+        }
+
+        const interval = setInterval(() => {
+            progress += Math.random() * 0.8;
+            if (progress > 100) {
+                progress = 100;
+                clearInterval(interval);
+                document.getElementById('status-title').innerText = "Analysis Complete";
+                setTimeout(() => {
+                    // Simulating transition to results
+                    document.body.style.opacity = "0";
+                    document.body.style.transition = "opacity 1s ease-out";
+                }, 1500);
+            }
+            setProgress(progress);
+        }, 80);
+
+        // Micro-interactions: Atmosphere floating orbs
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.blur-full');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            orbs.forEach((orb, index) => {
+                const shift = (index + 1) * 20;
+                orb.style.transform = `translate(${x * shift}px, ${y * shift}px)`;
+            });
+        });
+    </script>
+</body></html>

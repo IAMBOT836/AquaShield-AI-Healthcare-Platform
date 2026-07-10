@@ -1,0 +1,381 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Droplets, Shield, Activity, Microscope, AlertTriangle, 
+  Upload, ChevronRight, CheckCircle2, Info, User,
+  Thermometer, Beaker, HeartPulse, Stethoscope, 
+  MapPin, Clock, ArrowRight, Menu, X
+} from 'lucide-react';
+
+/**
+ * AQUASHIELD AI - MODULAR REACT COMPONENT SUITE
+ * Designed for Flask/Jinja integration.
+ * All data is passed via props or defined in a central 'mockData' object.
+ */
+
+// --- MOCK DATA / JINJA PLACEHOLDERS ---
+const mockData = {
+  prediction: {
+    scientificName: "Vibrio cholerae",
+    commonName: "Cholera Bacteria",
+    confidence: 98.4,
+    riskLevel: "HIGH", // LOW, MEDIUM, HIGH
+    severity: "CRITICAL",
+    summary: "Cholera is an acute diarrheal infection caused by ingestion of food or water contaminated with the bacterium Vibrio cholerae.",
+    symptoms: ["Fever", "Vomiting", "Diarrhea", "Abdominal Pain", "Dehydration"],
+    treatments: [
+      { name: "Boiling", description: "Min. 10 minutes at 100°C", icon: "Beaker" },
+      { name: "UV Purification", description: "Standard UV-C treatment", icon: "Activity" },
+      { name: "RO Filtration", description: "Reverse Osmosis (0.0001μ)", icon: "Shield" },
+      { name: "Chlorination", description: "Controlled chemical dosing", icon: "Droplets" }
+    ],
+    medicalGuidance: ["Drink ORS", "Maintain Hydration", "Consult Doctor", "Visit Primary Health Centre"]
+  },
+  features: [
+    { title: "AI Detection", desc: "Microscope image classification using Deep Learning.", icon: Microscope },
+    { title: "Disease Prediction", desc: "Predict possible waterborne diseases associated with pathogens.", icon: Activity },
+    { title: "Risk Assessment", desc: "Real-time contamination level categorization.", icon: AlertTriangle },
+    { title: "Water Purification", desc: "Actionable purification steps based on detected threats.", icon: Droplets },
+    { title: "Medical Guidance", desc: "Personalized first aid and preventive recommendations.", icon: Stethoscope },
+    { title: "Community Health", desc: "Early warning system for regional outbreak prevention.", icon: MapPin }
+  ]
+};
+
+// --- REUSABLE ATOMS ---
+
+const Badge = ({ children, variant = "primary" }) => {
+  const styles = {
+    primary: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+    success: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+    danger: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+    warning: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+  };
+  return (
+    <span className={`px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase ${styles[variant]}`}>
+      {children}
+    </span>
+  );
+};
+
+const Card = ({ children, className = "" }) => (
+  <div className={`bg-white dark:bg-slate-900 rounded-[24px] border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 ${className}`}>
+    {children}
+  </div>
+);
+
+// --- ORGANISMS / SECTIONS ---
+
+const Navbar = () => (
+  <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-100 dark:border-slate-800">
+    <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-xl">
+        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+          <Stethoscope size={24} />
+        </div>
+        <span>AquaShield AI</span>
+      </div>
+      <div className="hidden md:flex items-center gap-8">
+        {["Home", "About", "Features", "Dashboard", "Contact"].map(item => (
+          <a key={item} href={`#${item.toLowerCase()}`} className="text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors font-medium">{item}</a>
+        ))}
+      </div>
+      <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full font-semibold transition-all hover:shadow-lg hover:scale-105 active:scale-95">
+        Get Started
+      </button>
+    </div>
+  </nav>
+);
+
+const Hero = () => (
+  <section className="relative py-24 overflow-hidden">
+    <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div className="space-y-8 animate-in fade-in slide-in-from-left duration-700">
+        <Badge variant="primary">AI-Powered Water Safety</Badge>
+        <h1 className="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight">
+          Protect Communities <br />
+          <span className="text-blue-600">Before Disease Spreads.</span>
+        </h1>
+        <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-lg">
+          AquaShield AI leverages Deep Learning to detect harmful microorganisms in water samples, providing instant guidance for safer communities.
+        </p>
+        <div className="flex flex-wrap gap-4">
+          <button className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-blue-700 transition-all">
+            <Upload size={20} /> Upload Sample
+          </button>
+          <button className="border border-slate-200 dark:border-slate-800 px-8 py-4 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-900 transition-all">
+            Learn More
+          </button>
+        </div>
+      </div>
+      <div className="relative animate-in zoom-in duration-1000">
+        <div className="absolute inset-0 bg-blue-500/10 blur-3xl rounded-full translate-x-12 translate-y-12"></div>
+        <img 
+          src="{{DATA:IMAGE:IMAGE_4}}" 
+          alt="AI Microscope Analysis" 
+          className="relative rounded-[32px] shadow-2xl border border-white/20"
+        />
+      </div>
+    </div>
+  </section>
+);
+
+const FeatureSection = () => (
+  <section className="py-24 bg-slate-50 dark:bg-slate-900/50">
+    <div className="max-w-7xl mx-auto px-6">
+      <div className="text-center mb-16 space-y-4">
+        <h2 className="text-3xl font-bold dark:text-white">Comprehensive Water Analysis</h2>
+        <p className="text-slate-600 dark:text-slate-400">Our neural networks ensure precision in microscopic water monitoring.</p>
+      </div>
+      <div className="grid md:grid-cols-3 gap-8">
+        {mockData.features.map((f, i) => (
+          <Card key={i} className="p-8">
+            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-2xl w-fit mb-6">
+              <f.icon size={28} />
+            </div>
+            <h3 className="text-xl font-bold mb-3 dark:text-white">{f.title}</h3>
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{f.desc}</p>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const UploadComponent = ({ onUpload }) => (
+  <section className="py-24">
+    <div className="max-w-4xl mx-auto px-6">
+      <Card className="p-12 border-2 border-dashed border-blue-200 dark:border-blue-900/50 flex flex-col items-center text-center space-y-6 bg-blue-50/30 dark:bg-blue-950/10">
+        <div className="w-20 h-20 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center">
+          <Upload size={32} />
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-2xl font-bold dark:text-white">Drag & Drop microscopic image here</h3>
+          <p className="text-slate-500">Supported formats: PNG, JPG, JPEG (Max 10MB)</p>
+        </div>
+        <button 
+          onClick={onUpload}
+          className="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold hover:shadow-xl hover:scale-105 transition-all"
+        >
+          Analyze Sample
+        </button>
+      </Card>
+    </div>
+  </section>
+);
+
+const LoadingScreen = ({ progress, step }) => (
+  <div className="fixed inset-0 z-[100] bg-white dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+    <div className="relative w-64 h-64 mb-12">
+      <div className="absolute inset-0 border-8 border-slate-100 dark:border-slate-900 rounded-full"></div>
+      <svg className="w-full h-full -rotate-90">
+        <circle 
+          cx="128" cy="128" r="120" fill="none" stroke="currentColor" strokeWidth="8"
+          className="text-blue-600 transition-all duration-500 ease-out"
+          strokeDasharray={754}
+          strokeDashoffset={754 - (754 * progress) / 100}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center text-4xl font-black text-blue-600">
+        {progress}%
+      </div>
+    </div>
+    <h2 className="text-3xl font-bold mb-4 dark:text-white">Analyzing Water Sample...</h2>
+    <div className="max-w-md w-full space-y-4">
+      {["Preprocessing", "Feature Extraction", "AI Classification", "Disease Mapping", "Recommendations"].map((s, i) => {
+        const isActive = step >= i;
+        return (
+          <div key={s} className={`flex items-center gap-3 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-30'}`}>
+            <CheckCircle2 size={20} className={isActive ? 'text-blue-500' : 'text-slate-300'} />
+            <span className="font-medium dark:text-slate-200">{s}</span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+);
+
+const Dashboard = ({ data = mockData.prediction }) => (
+  <div className="bg-slate-50 dark:bg-slate-950 min-h-screen pt-20">
+    {data.riskLevel === "HIGH" && (
+      <div className="bg-red-600 text-white py-4 px-6 flex items-center justify-center gap-3 font-bold animate-pulse">
+        <AlertTriangle size={20} /> UNSAFE WATER DETECTED. AVOID CONSUMPTION IMMEDIATELY.
+      </div>
+    )}
+    <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      {/* Left Column: Sample & Confidence */}
+      <div className="lg:col-span-3 space-y-8">
+        <Card className="p-6">
+          <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Sample Input</p>
+          <div className="rounded-xl overflow-hidden aspect-square bg-slate-200">
+             <img src="{{DATA:IMAGE:IMAGE_4}}" className="w-full h-full object-cover grayscale brightness-75 contrast-125" />
+          </div>
+        </Card>
+        <Card className="p-8 flex flex-col items-center text-center">
+          <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">AI Confidence</p>
+          <div className="relative w-32 h-32 flex items-center justify-center mb-4">
+             <svg className="absolute inset-0 w-full h-full -rotate-90">
+                <circle cx="64" cy="64" r="58" fill="none" stroke="#E2E8F0" strokeWidth="8" />
+                <circle cx="64" cy="64" r="58" fill="none" stroke="#2563EB" strokeWidth="8" strokeDasharray={364} strokeDashoffset={364 - (364 * data.confidence) / 100} strokeLinecap="round" />
+             </svg>
+             <span className="text-2xl font-black text-blue-600">{data.confidence}%</span>
+          </div>
+          <p className="text-emerald-500 font-bold text-sm">Highly certain match</p>
+        </Card>
+      </div>
+
+      {/* Middle Column: Organism & Details */}
+      <div className="lg:col-span-6 space-y-8">
+        <Card className="p-10 relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-8 text-blue-100 dark:text-blue-900">
+            <Microscope size={80} />
+          </div>
+          <div className="relative space-y-4">
+            <div>
+              <h2 className="text-3xl font-black text-red-600">{data.scientificName}</h2>
+              <p className="text-xl text-slate-500 italic">{data.commonName}</p>
+            </div>
+            <div className="flex gap-3">
+              <Badge variant="danger">{data.severity} SEVERITY</Badge>
+              <Badge variant="warning">Highly Contagious</Badge>
+            </div>
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
+              {data.summary}
+            </p>
+          </div>
+        </Card>
+
+        <Card className="p-10">
+          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <Info size={20} className="text-blue-500" /> Common Symptoms
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            {data.symptoms.map(s => (
+              <span key={s} className="px-5 py-2 bg-slate-100 dark:bg-slate-800 rounded-xl font-medium text-slate-700 dark:text-slate-300">
+                {s}
+              </span>
+            ))}
+          </div>
+        </Card>
+      </div>
+
+      {/* Right Column: Actions */}
+      <div className="lg:col-span-3 space-y-8">
+        <Card className="p-8">
+           <h3 className="text-lg font-bold mb-6">Treatment Plan</h3>
+           <div className="space-y-4">
+             {data.treatments.map((t, i) => (
+               <div key={i} className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+                 <div className="p-2 bg-white dark:bg-slate-900 rounded-lg text-blue-500 shadow-sm">
+                   <Droplets size={18} />
+                 </div>
+                 <div>
+                   <p className="font-bold text-sm dark:text-white">{t.name}</p>
+                   <p className="text-xs text-slate-500">{t.description}</p>
+                 </div>
+               </div>
+             ))}
+           </div>
+        </Card>
+
+        <Card className="p-8 border-none bg-blue-600 text-white shadow-blue-200 dark:shadow-none">
+           <div className="flex items-center gap-2 mb-4">
+             <HeartPulse size={24} />
+             <h3 className="font-bold">Medical Actions</h3>
+           </div>
+           <ul className="space-y-3">
+             {data.medicalGuidance.map(item => (
+               <li key={item} className="flex items-center gap-2 text-sm font-medium">
+                 <CheckCircle2 size={16} className="text-blue-200" /> {item}
+               </li>
+             ))}
+           </ul>
+           <button className="w-full mt-6 bg-white text-blue-600 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors">
+              Start Health Chat
+           </button>
+        </Card>
+      </div>
+    </div>
+  </div>
+);
+
+const Footer = () => (
+  <footer className="bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900 py-16">
+    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-blue-600 font-bold text-xl">
+          <Stethoscope size={24} />
+          <span>AquaShield AI</span>
+        </div>
+        <p className="text-slate-500 text-sm max-w-xs">AI-driven water quality monitoring for a healthier tomorrow.</p>
+      </div>
+      <div className="flex gap-8">
+        {["Sitemap", "GitHub", "LinkedIn"].map(l => (
+          <a key={l} href="#" className="text-slate-500 hover:text-blue-600 text-sm font-medium transition-colors">{l}</a>
+        ))}
+      </div>
+      <div className="text-slate-400 text-sm">
+        © 2024 AquaShield AI. Made with ❤️ using AI
+      </div>
+    </div>
+  </footer>
+);
+
+// --- MAIN PAGE ORCHESTRATOR ---
+
+const App = () => {
+  const [view, setView] = useState('landing'); // landing, loading, results
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loadingStep, setLoadingStep] = useState(0);
+
+  const startAnalysis = () => {
+    setView('loading');
+    let p = 0;
+    const interval = setInterval(() => {
+      p += 1;
+      setLoadingProgress(p);
+      if (p === 20) setLoadingStep(1);
+      if (p === 40) setLoadingStep(2);
+      if (p === 60) setLoadingStep(3);
+      if (p === 80) setLoadingStep(4);
+      if (p === 100) {
+        clearInterval(interval);
+        setTimeout(() => setView('results'), 500);
+      }
+    }, 40);
+  };
+
+  return (
+    <div className="font-sans antialiased text-slate-900 dark:text-slate-100 dark:bg-slate-950">
+      <Navbar />
+      
+      {view === 'landing' && (
+        <main className="animate-in fade-in duration-500">
+          <Hero />
+          <FeatureSection />
+          <UploadComponent onUpload={startAnalysis} />
+        </main>
+      )}
+
+      {view === 'loading' && (
+        <LoadingScreen progress={loadingProgress} step={loadingStep} />
+      )}
+
+      {view === 'results' && (
+        <main className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <Dashboard />
+          <div className="max-w-7xl mx-auto px-6 pb-24 flex justify-center">
+            <button 
+              onClick={() => setView('landing')}
+              className="text-slate-500 hover:text-blue-600 font-bold flex items-center gap-2 transition-colors"
+            >
+              ← Back to Upload
+            </button>
+          </div>
+        </main>
+      )}
+
+      <Footer />
+    </div>
+  );
+};
+
+export default App;

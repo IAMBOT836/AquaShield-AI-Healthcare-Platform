@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About &amp; Features | AquaShield AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 74, 198, 0.05);
+        }
+        .dark .glass-card {
+            background: rgba(203, 219, 245, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .floating-orb {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+        .timeline-path {
+            background: repeating-linear-gradient(to bottom, transparent, transparent 10px, #004ac6 10px, #004ac6 20px);
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 74, 198, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(0, 74, 198, 0); }
+        }
+        .animate-glow {
+            animation: pulse-glow 2s infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "surface-dim": "#cbdbf5",
+                        "surface-bright": "#f8f9ff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#07006c",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#005236",
+                        "background": "#f8f9ff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary-container": "#f1eeff",
+                        "on-primary": "#ffffff",
+                        "secondary": "#006c49",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-primary-fixed": "#00174b",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary": "#004ac6",
+                        "tertiary-container": "#585be6",
+                        "inverse-surface": "#213145",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-variant": "#d3e4fe",
+                        "outline-variant": "#c3c6d7",
+                        "on-background": "#0b1c30",
+                        "secondary-container": "#6cf8bb",
+                        "surface-container-low": "#eff4ff",
+                        "on-primary-container": "#eeefff",
+                        "surface-tint": "#0053db",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-secondary-container": "#00714d",
+                        "on-secondary-fixed": "#002113",
+                        "primary-container": "#2563eb",
+                        "outline": "#737686",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-surface": "#0b1c30",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#dbe1ff",
+                        "tertiary": "#3e3fcc",
+                        "surface": "#f8f9ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-surface-variant": "#434655",
+                        "tertiary-fixed": "#e1e0ff",
+                        "surface-container-high": "#dce9ff",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "card-gap": "24px",
+                        "section-margin": "64px",
+                        "gutter": "24px",
+                        "container-padding-mobile": "20px",
+                        "unit": "8px",
+                        "container-padding-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<!-- Background Orbs -->
+<div class="floating-orb w-[600px] h-[600px] bg-primary/20 rounded-full top-[-200px] left-[-100px]"></div>
+<div class="floating-orb w-[400px] h-[400px] bg-tertiary/10 rounded-full bottom-[10% ] right-[-50px]"></div>
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface-container-low/80 backdrop-blur-xl docked full-width top-0 sticky z-50 backdrop-blur-[20px] border-b border-white/20 dark:border-white/10 shadow-[0_8px_32px_rgba(0,74,198,0.05)]">
+<div class="flex justify-between items-center w-full px-container-padding-mobile md:px-container-padding-desktop max-w-7xl mx-auto h-20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<span class="font-display-lg text-display-lg-mobile md:text-[28px] text-primary dark:text-primary-fixed-dim tracking-tight font-extrabold">AquaShield AI</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim border-b-2 border-primary pb-1 font-bold" href="#">About</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#">Features</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-md text-label-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300">
+                Get Started
+            </button>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-container-padding-mobile md:px-container-padding-desktop">
+<!-- About Section -->
+<section class="py-section-margin grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
+<div class="space-y-6">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-container/10 text-primary font-label-sm text-label-sm border border-primary/20">
+<span class="material-symbols-outlined text-sm">info</span> OUR MISSION
+                </div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-background">Empowering Rural Communities Through <span class="text-primary">Clinical Intelligence.</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    AquaShield AI bridges the gap between sophisticated laboratory analysis and rural accessibility. In many developing regions, waterborne diseases go undetected due to a lack of rapid testing facilities, leading to preventable health crises.
+                </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="glass-card p-6 rounded-2xl">
+<span class="material-symbols-outlined text-primary mb-3">troubleshoot</span>
+<h3 class="font-headline-md text-headline-md mb-2">The Problem</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Over 2 billion people lack access to safe drinking water, with testing often taking weeks to deliver results.</p>
+</div>
+<div class="glass-card p-6 rounded-2xl">
+<span class="material-symbols-outlined text-secondary mb-3">target</span>
+<h3 class="font-headline-md text-headline-md mb-2">Our Objective</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">To provide instant, lab-grade microbial detection using nothing more than a smartphone camera and AI.</p>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="glass-card rounded-[32px] overflow-hidden aspect-square md:aspect-video lg:aspect-square group">
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="A cinematic, high-resolution photograph of a diverse rural community gathering around a clean water source in a lush tropical landscape. The lighting is warm and golden, conveying a sense of hope and health. The image is captured with a shallow depth of field, focusing on a young girl drinking clear water, symbolizing the direct impact of clean water technology. The overall aesthetic is clean, medical, and empowering." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuClx5GuyG62dDobf3EDgUOm1lHGmffZPFSGjZhOtqQ_jdWhpxdaoRURWflLHi4fNAFWAqFQbjQcr9Sde6QKNjCB0xu4ekGHDnFeEBKP7yfhHEJOBzIFTvuG5U-OheUQrGf8R5AcdHZufa170K6Dk0URRa89fOgwhblOI5o7713ab01Qrd100If6eGDN53iK2gipuWaXaTFlB5dITKlWynlo3irKNi-WOuXB7bRJ_geqWixrHP4I6Cxs-xcSIQFpzSnzXUEPk5d1h8s')"></div>
+</div>
+<!-- Floating Metric -->
+<div class="absolute bottom-8 left-8 right-8 glass-card p-6 rounded-2xl flex items-center gap-4 animate-float z-20">
+<div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md">98.4% Accuracy</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Clinical Pathogen Detection</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Workflow Timeline -->
+<section class="py-section-margin">
+<div class="text-center mb-16 space-y-4">
+<h2 class="font-display-lg text-display-lg-mobile md:text-headline-lg">Intelligent Workflow</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Our seamless end-to-end process transforms raw imagery into actionable medical insights in seconds.</p>
+</div>
+<div class="relative space-y-12">
+<!-- Vertical Line (Desktop) -->
+<div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 timeline-path -translate-x-1/2 opacity-20"></div>
+<!-- Step 1 -->
+<div class="flex flex-col md:flex-row items-center gap-gutter relative">
+<div class="flex-1 md:text-right">
+<h3 class="font-headline-lg text-headline-lg mb-2">1. Image Upload</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Simply capture a photo of a water sample through a basic microscope attachment or lens enhancement on any mobile device.</p>
+</div>
+<div class="z-10 w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-xl animate-glow">
+<span class="material-symbols-outlined">upload_file</span>
+</div>
+<div class="flex-1 hidden md:block">
+<div class="glass-card rounded-2xl h-48 w-full bg-cover bg-center" data-alt="A professional close-up shot of a smartphone being placed over a specialized portable microscope lens. The lighting is clinical and bright, emphasizing the clean white surfaces. The screen of the phone displays a high-resolution, slightly blurry image of water microorganisms, ready for capture. The aesthetic is futuristic medical tech." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCKYQrUkEJlUKiXNUbt4x5MBjbAReCoiPphiu4j-Ml82v5XrfAcRBrpBAtJ9yQNqLPE9i6IPYjQfxvOXlh8nxhKNBrn31VKCFAK8MbKxwHOcmH3fSx0ZdwIQh5etZoxioI0EebWGjGs5XlfCTTpz7EbVSrCmalVweMGno9D28oAfpsc4uiUmSs4M2JM8zgINn7-foDnnpO4RVb4rZp0ggWfbUJZZWd0bqmE4P5HnNyP6WEQId-xEXjVekd1mtuu-F_Ono1KfvG0z68')"></div>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-gutter relative">
+<div class="flex-1 md:text-left">
+<h3 class="font-headline-lg text-headline-lg mb-2">2. AI Processing</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Images are instantly transmitted to our neural network, which utilizes edge computing to analyze pixel patterns at a microscopic level.</p>
+</div>
+<div class="z-10 w-16 h-16 rounded-full bg-tertiary flex items-center justify-center text-on-primary shadow-xl">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<div class="flex-1 hidden md:block">
+<div class="h-48 w-full relative rounded-2xl overflow-hidden">
+
+</div>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col md:flex-row items-center gap-gutter relative">
+<div class="flex-1 md:text-right">
+<h3 class="font-headline-lg text-headline-lg mb-2">3. Organism Detection</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Computer vision models identify specific bacterial morphologies, including E. coli, Vibrio cholerae, and Legionella.</p>
+</div>
+<div class="z-10 w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-on-primary shadow-xl">
+<span class="material-symbols-outlined">microbiology</span>
+</div>
+<div class="flex-1 hidden md:block">
+<div class="glass-card rounded-2xl h-48 w-full bg-cover bg-center" data-alt="A high-contrast visualization of bacterial cells seen through a microscope, with digital bounding boxes and labels identifying different species. The interface overlays vibrant green and blue glowing highlights on the pathogens. The style is that of a modern AI medical dashboard, precise and highly detailed." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD66tHNJvIA1CHHVlmctF027x2BC2ybQwL1hV0LN8j0agCpI9m-ndwG36gtIE0RRoVGn6tm6d33Bhjcsw4bmCt5S3fkDDD2nazFHQoTBIPGJCjtLPY5yxtO-pXxirvc7mIjDtuz8mjEI5xpG_n9btHk1T3x4HGUqsxJUNxOagatSj6yXl2qWIvjbhmrfi1wWIGggxuPMZhLDOwI17Pq8VDyt4zVR3RhXC8LYEV_rkjNDsr91LzZ1jHzhfGrtYm2LI6gdkoApCu-udU')"></div>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-gutter relative">
+<div class="flex-1 md:text-left">
+<h3 class="font-headline-lg text-headline-lg mb-2">4. Disease Prediction</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">By calculating concentration levels, our AI predicts the risk level of disease outbreaks within the local community.</p>
+</div>
+<div class="z-10 w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-xl">
+<span class="material-symbols-outlined">query_stats</span>
+</div>
+<div class="flex-1 hidden md:block">
+<div class="glass-card rounded-2xl h-48 w-full p-6 flex flex-col justify-center">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md">Contamination Risk</span>
+<span class="font-label-sm text-label-sm text-error px-2 py-1 bg-error-container rounded-full">High</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-4 overflow-hidden">
+<div class="bg-gradient-to-r from-secondary to-error h-full" style="width: 82%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="flex flex-col md:flex-row items-center gap-gutter relative">
+<div class="flex-1 md:text-right">
+<h3 class="font-headline-lg text-headline-lg mb-2">5. Medical Guidance</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Receive immediate actionable steps for water treatment and medical protocols tailored to the detected pathogen.</p>
+</div>
+<div class="z-10 w-16 h-16 rounded-full bg-secondary-fixed-dim flex items-center justify-center text-on-secondary shadow-xl">
+<span class="material-symbols-outlined">vaccines</span>
+</div>
+<div class="flex-1 hidden md:block">
+<div class="glass-card rounded-2xl h-48 w-full bg-cover bg-center" data-alt="A clean, minimalist graphic showing a glass of pure water next to a medical kit. The colors are dominated by soft blues and whites. A digital notification icon floats nearby, showing a checkmark and the text 'Safety Protocol Verified'. The atmosphere is sterile, reassuring, and premium." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBXn53MUGmaZLjoaHSG52IvhIgcwFUWNPpKc4kndhRMifIwZggLB0xFKRzC3Dl2xu-HryFYIgGwNXdyRVR7GmFV7_1aicTLt2d5lA6511rAATapyaTxKTtNr28EkeqkENTP_oBNVrDw8yWMSHUHRzj-2H22wqaYZavL6hgqMywGPG9ltAvN57SRUKC9nMgXDt8WPZROg2yZUrvbEo_LfZnphV5GPIKGSyZQt9ej06dj9Nnevr9T7KSFJEn7g9VUO_9haHI4N1pCmTQ')"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technologies Section -->
+<section class="py-section-margin">
+<div class="glass-card rounded-[40px] p-12 overflow-hidden relative">
+<div class="absolute top-0 right-0 p-8 opacity-10">
+<span class="material-symbols-outlined text-[200px]">terminal</span>
+</div>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg mb-12">The Tech Stack of <span class="text-primary">Precision.</span></h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="space-y-4">
+<div class="w-14 h-14 bg-primary-container/20 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl">neurology</span>
+</div>
+<h4 class="font-headline-md text-headline-md">Deep Learning</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Convolutional Neural Networks (CNNs) trained on millions of pathogen samples for sub-pixel accuracy.</p>
+</div>
+<div class="space-y-4">
+<div class="w-14 h-14 bg-secondary-container/20 rounded-xl flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-3xl">visibility</span>
+</div>
+<h4 class="font-headline-md text-headline-md">Computer Vision</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Real-time object detection and segmentation at 60fps for seamless handheld analysis.</p>
+</div>
+<div class="space-y-4">
+<div class="w-14 h-14 bg-tertiary-container/20 rounded-xl flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-3xl">analytics</span>
+</div>
+<h4 class="font-headline-md text-headline-md">Real-time Analytics</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Cloud-based data aggregation for predictive regional epidemiology and outbreak mapping.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact & FAQ Section -->
+<section class="py-section-margin grid grid-cols-1 lg:grid-cols-2 gap-16">
+<!-- FAQ Accordion -->
+<div>
+<h2 class="font-display-lg text-display-lg-mobile md:text-headline-lg mb-8">Common Questions</h2>
+<div class="space-y-4">
+<div class="glass-card rounded-2xl overflow-hidden">
+<button class="w-full p-6 text-left flex justify-between items-center group" onclick="toggleFaq(this)">
+<span class="font-headline-md text-headline-md text-on-surface">Is it offline capable?</span>
+<span class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 text-on-surface-variant font-body-md">
+                            Yes, AquaShield AI has a lightweight edge model that can perform basic microbial detection without an active internet connection. Full analytics sync once connectivity is restored.
+                        </div>
+</div>
+<div class="glass-card rounded-2xl overflow-hidden">
+<button class="w-full p-6 text-left flex justify-between items-center group" onclick="toggleFaq(this)">
+<span class="font-headline-md text-headline-md text-on-surface">What hardware is required?</span>
+<span class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 text-on-surface-variant font-body-md">
+                            Any smartphone with at least an 8MP camera and our affordable 100x clip-on lens attachment, which we provide to NGOs and local health authorities.
+                        </div>
+</div>
+<div class="glass-card rounded-2xl overflow-hidden">
+<button class="w-full p-6 text-left flex justify-between items-center group" onclick="toggleFaq(this)">
+<span class="font-headline-md text-headline-md text-on-surface">How accurate is the diagnosis?</span>
+<span class="material-symbols-outlined transition-transform duration-300">expand_more</span>
+</button>
+<div class="faq-content hidden px-6 pb-6 text-on-surface-variant font-body-md">
+                            In clinical trials, our AI achieved a 98.4% correlation with traditional laboratory plate culture results for major waterborne pathogens.
+                        </div>
+</div>
+</div>
+</div>
+<!-- Contact Form -->
+<div class="glass-card rounded-[32px] p-8 md:p-10">
+<h2 class="font-headline-lg text-headline-lg mb-2">Get in Touch</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">Partner with us to bring clean water safety to your region.</p>
+<form class="space-y-6" onsubmit="event.preventDefault();">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Full Name</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl p-4 focus:ring-2 focus:ring-primary/50 transition-all" placeholder="John Doe" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Email Address</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl p-4 focus:ring-2 focus:ring-primary/50 transition-all" placeholder="john@example.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Organization</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl p-4 focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Health Corp / NGO" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Message</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-xl p-4 h-32 focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Tell us about your mission..."></textarea>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-headline-md text-headline-md hover:shadow-xl hover:translate-y-[-2px] transition-all duration-300">
+                        Send Message
+                    </button>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-high full-width bottom border-t border-outline-variant/30 dark:border-outline/20">
+<div class="w-full py-12 px-container-padding-mobile md:px-container-padding-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<span class="font-headline-md text-headline-md text-on-surface dark:text-surface-bright">AquaShield AI</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant/80 text-center md:text-left max-w-sm">
+                    Leveraging AI for global health equity and safe water access.
+                </p>
+</div>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant/80 hover:text-primary transition-transform duration-300 hover:translate-y-[-2px]" href="#">Sitemap</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant/80 hover:text-primary transition-transform duration-300 hover:translate-y-[-2px]" href="#">GitHub</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant/80 hover:text-primary transition-transform duration-300 hover:translate-y-[-2px]" href="#">LinkedIn</a>
+</div>
+<div class="text-center md:text-right space-y-2">
+<p class="font-body-md text-body-md text-on-surface-variant/80">© 2024 AquaShield AI. Made with ❤️ using AI</p>
+<div class="flex gap-4 justify-center md:justify-end">
+<span class="material-symbols-outlined text-on-surface-variant/40 hover:text-primary cursor-pointer">public</span>
+<span class="material-symbols-outlined text-on-surface-variant/40 hover:text-primary cursor-pointer">verified_user</span>
+<span class="material-symbols-outlined text-on-surface-variant/40 hover:text-primary cursor-pointer">eco</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.material-symbols-outlined');
+            
+            // Toggle visibility
+            content.classList.toggle('hidden');
+            
+            // Rotate icon
+            if (content.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
+            
+            // Close other FAQs if open
+            const allFaqs = document.querySelectorAll('.faq-content');
+            const allIcons = document.querySelectorAll('.material-symbols-outlined');
+            
+            allFaqs.forEach((faq, idx) => {
+                if (faq !== content) {
+                    faq.classList.add('hidden');
+                }
+            });
+        }
+
+        // Simple parallax or float animation trigger
+        window.addEventListener('scroll', () => {
+            const orbs = document.querySelectorAll('.floating-orb');
+            const scrolled = window.pageYOffset;
+            orbs.forEach((orb, i) => {
+                const speed = (i + 1) * 0.1;
+                orb.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body></html>

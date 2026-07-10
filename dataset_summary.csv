@@ -1,0 +1,21 @@
+class_index,organism,imaging_type,standardized_class_name,image_count,folder_name
+0,Aspergillus niger,gram stain,Aspergillus niger_gram stain,30,Aspergillus niger_gram stain
+1,Aspergillus niger,media plate,Aspergillus niger_media plate,34,Aspergillosis niger_media plate
+2,Bacillus subtilis,gram stain,Bacillus subtilis_gram stain,28,Bacillus subtilis_gram stain
+3,Bacillus subtilis,media plate,Bacillus subtilis_media plate,29,Bacillus subtilis_media plate
+4,Candida albicans,gram stain,Candida albicans_gram stain,30,Candida albicans_gram stain
+5,Candida albicans,media plate,Candida albicans_media plate,29,Candida albicans_media plates
+6,Clostridium sporogenes,gram stain,Clostridium sporogenes_gram stain,29,Clostridium sporogenes_gram stain
+7,Clostridium sporogenes,media plate,Clostridium sporogenes_media plate,26,Clostridium sporogenes_media plates
+8,Enterococcus faecalis,gram stain,Enterococcus faecalis_gram stain,27,Enterococcus faecalis_gram stain
+9,Enterococcus faecalis,media plate,Enterococcus faecalis_media plate,26,Enterococcus faecalis_media plates
+10,Escherichia coli,gram stain,Escherichia coli_gram stain,30,Escherichia coli_gram stain
+11,Escherichia coli,media plate,Escherichia coli_media plate,31,Escherichia coli_media plates
+12,Klebsiella pneumoniae,gram stain,Klebsiella pneumoniae_gram stain,30,Klebsiella pneumoniae_gram stain
+13,Klebsiella pneumoniae,media plate,Klebsiella pneumoniae_media plate,27,Klebsiella pneumoniae_media plate
+14,Pseudomonas aeruginosa,gram stain,Pseudomonas aeruginosa_gram stain,27,Pseudomonas auergosa_gram stain
+15,Pseudomonas aeruginosa,media plate,Pseudomonas aeruginosa_media plate,33,Pseudomonas auergosa_media plate
+16,Staphylococcus aureus,gram stain,Staphylococcus aureus_gram stain,53,Staph aureus_gram stain
+17,Staphylococcus aureus,media plate,Staphylococcus aureus_media plate,38,Staph aureus_media plate
+18,Streptococcus pyogenes,gram stain,Streptococcus pyogenes_gram stain,41,Streptococcus pyogenes_gram stain
+19,Streptococcus pyogenes,media plate,Streptococcus pyogenes_media plate,31,Streptococcus pyogenes_media plates
